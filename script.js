@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
-    // Default to dark theme for senior engineering portfolio aesthetic
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    // Default to light theme for clean portfolio aesthetic
+    const savedTheme = localStorage.getItem('theme') || 'light';
     
     if (savedTheme === 'light') {
         body.classList.remove('dark-theme');

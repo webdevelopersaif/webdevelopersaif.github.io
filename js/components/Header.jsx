@@ -14,7 +14,16 @@ function Header({ theme, toggleTheme, activeNav, isMobileMenuOpen, toggleMobileM
         <header className="site-header">
             <div className="container header-container">
                 <a href="#hero" className="brand-logo">
-                    <span>Saif</span><span className="logo-accent">.Lead</span>
+                    <div className="logo-icon-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="m18 16 4-4-4-4" />
+                            <path d="m6 8-4 4 4 4" />
+                            <path d="m14.5 4-5 16" />
+                        </svg>
+                    </div>
+                    <span className="logo-text">
+                        <span className="logo-main">Saif</span><span className="logo-accent">.Ansari</span>
+                    </span>
                 </a>
 
                 <nav className={`main-nav ${isMobileMenuOpen ? 'open' : ''}`} id="mainNav">

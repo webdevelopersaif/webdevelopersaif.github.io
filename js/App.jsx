@@ -1,7 +1,7 @@
 // Root App Component
 function App() {
     const [theme, setTheme] = React.useState(() => {
-        return localStorage.getItem('theme') || 'dark';
+        return localStorage.getItem('theme') || 'light';
     });
     const [activeNav, setActiveNav] = React.useState('about');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -51,20 +51,110 @@ function App() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // IntersectionObserver for reveal fade-in animations on scroll
+    // GSAP + ScrollTrigger Animations Initialization
     React.useEffect(() => {
-        const fadeElements = document.querySelectorAll('.fade-in');
-        const fadeObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+            document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+        document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+
+        const ctx = gsap.context(() => {
+            // 1. Hero Entrance Animation
+            gsap.from('.hero-badge, .hero-title, .hero-role-title, .hero-positioning-line, .hero-desc', {
+                y: 25,
+                opacity: 0,
+                stagger: 0.08,
+                duration: 0.7,
+                ease: 'power3.out'
+            });
+
+            gsap.from('.hero-contacts .contact-badge, .hero-actions .btn', {
+                opacity: 0,
+                scale: 0.95,
+                y: 15,
+                stagger: 0.05,
+                duration: 0.5,
+                ease: 'power2.out',
+                delay: 0.2
+            });
+
+            gsap.from('.tech-stack-card', {
+                opacity: 0,
+                x: 30,
+                duration: 0.8,
+                ease: 'power3.out',
+                delay: 0.2
+            });
+
+            // 2. Ambient Code Card Floating Motion
+            gsap.to('.tech-stack-card', {
+                y: -8,
+                duration: 2.5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+
+            // 3. Animated Section Title Dividers
+            document.querySelectorAll('.section-header').forEach(header => {
+                const divider = header.querySelector('.title-divider');
+                if (divider) {
+                    gsap.fromTo(divider, 
+                        { width: 0 },
+                        {
+                            width: '80px',
+                            duration: 0.6,
+                            ease: 'power2.out',
+                            scrollTrigger: {
+                                trigger: header,
+                                start: 'top 90%',
+                                once: true
+                            }
+                        }
+                    );
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        fadeElements.forEach(el => fadeObserver.observe(el));
-        return () => fadeObserver.disconnect();
+            // Helper function for stagger scroll triggers with automatic clearProps
+            const animateBatch = (selector, triggerSelector, yOffset = 30) => {
+                const items = document.querySelectorAll(selector);
+                if (!items.length) return;
+
+                gsap.fromTo(items,
+                    { opacity: 0, y: yOffset },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        stagger: 0.1,
+                        duration: 0.6,
+                        ease: 'power2.out',
+                        clearProps: 'transform,opacity',
+                        scrollTrigger: {
+                            trigger: triggerSelector || selector,
+                            start: 'top 92%',
+                            once: true
+                        }
+                    }
+                );
+            };
+
+            animateBatch('.deepdive-card', '.deepdive-grid');
+            animateBatch('.tech-category-box', '.compact-tech-grid');
+            animateBatch('.gsap-experience-card', '.timeline');
+            animateBatch('.project-card', '.projects-grid');
+            animateBatch('.focus-card', '.focus-grid');
+            animateBatch('.contact-info-panel, .contact-form-panel', '.contact-grid');
+
+            // Refresh ScrollTrigger calculations after React layout finishes
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 300);
+        });
+
+        return () => ctx.revert();
     }, []);
 
     return (
