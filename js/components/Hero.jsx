@@ -96,12 +96,26 @@ function Hero({ personal }) {
 {'}'}</code></pre>
                         </div>
                         <div className="tech-node-bar">
-                            <span className="node-pill">Laravel</span>
-                            <span className="node-pill">Python</span>
-                            <span className="node-pill">MySQL</span>
-                            <span className="node-pill">Redis</span>
-                            <span className="node-pill">AWS</span>
-                            <span className="node-pill">LLM / RAG</span>
+                            <span className="node-pill">
+                                <span className="node-dot red"></span>
+                                <span>Laravel</span>
+                            </span>
+                            <span className="node-pill">
+                                <span className="node-dot blue"></span>
+                                <span>Python</span>
+                            </span>
+                            <span className="node-pill">
+                                <span className="node-dot orange"></span>
+                                <span>AWS</span>
+                            </span>
+                            <span className="node-pill">
+                                <span className="node-dot cyan"></span>
+                                <span>RAG</span>
+                            </span>
+                            <span className="node-pill">
+                                <span className="node-dot purple"></span>
+                                <span>AI Automation</span>
+                            </span>
                         </div>
                     </div>
                 </div>
