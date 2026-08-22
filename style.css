@@ -382,10 +382,22 @@ h6 {
     padding: 12px 24px;
     font-size: 0.92rem;
     font-weight: 600;
+    line-height: 1;
     border-radius: var(--radius-sm);
     position: relative;
     overflow: hidden;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.btn svg {
+    flex-shrink: 0;
+    display: block;
 }
 
 .btn-primary {
@@ -737,6 +749,7 @@ body.light-theme .moon-icon {
 .hero-contacts {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 10px;
     margin-bottom: 32px;
 }
@@ -744,15 +757,28 @@ body.light-theme .moon-icon {
 .contact-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 8px 14px;
     font-size: 0.85rem;
     font-weight: 500;
+    line-height: 1;
     color: var(--text-secondary);
     background: var(--glass-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.contact-badge span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.contact-badge svg {
+    flex-shrink: 0;
+    display: block;
 }
 
 a.contact-badge:hover {
